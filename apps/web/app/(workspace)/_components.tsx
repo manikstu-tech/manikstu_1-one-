@@ -1,5 +1,6 @@
 import type { ElementType, ReactNode } from "react";
 import { ChevronDown, ChevronRight, Home, Search } from "lucide-react";
+import BackButton from "./BackButton";
 
 /* ---------- Breadcrumb ---------- */
 export function Breadcrumb({ items }: { items: string[] }) {
@@ -30,9 +31,12 @@ export function PageHeader({
 }) {
   return (
     <div className="flex flex-wrap items-start justify-between gap-4">
-      <div className="min-w-0">
-        <h1 className="text-[28px] font-bold leading-tight">{title}</h1>
-        {subtitle && <p className="mt-0.5 text-sm text-muted">{subtitle}</p>}
+      <div className="flex min-w-0 items-start gap-3">
+        <BackButton />
+        <div className="min-w-0">
+          <h1 className="text-[28px] font-bold leading-tight">{title}</h1>
+          {subtitle && <p className="mt-0.5 text-sm text-muted">{subtitle}</p>}
+        </div>
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2.5">{actions}</div>}
     </div>
