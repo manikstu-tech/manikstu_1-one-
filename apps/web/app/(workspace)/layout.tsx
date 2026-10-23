@@ -82,27 +82,30 @@ export default function WorkspaceLayout({
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-3">
-            <button
-              type="button"
+            <a
+              href="/notifications"
+              aria-label="Notifications"
               className="relative grid size-9 place-items-center rounded-lg text-brand-charcoal/70 hover:bg-brand-cream"
             >
               <Bell className="size-5" strokeWidth={1.75} />
               <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-brand-red text-[9px] font-bold text-white">
                 12
               </span>
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="/notifications"
+              aria-label="WhatsApp communications"
               className="hidden size-9 place-items-center rounded-full bg-[#25d366] text-white sm:grid"
             >
               <MessageCircle className="size-5" strokeWidth={1.75} />
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="/help"
+              aria-label="Help & Support"
               className="hidden size-9 place-items-center rounded-lg text-brand-charcoal/70 hover:bg-brand-cream md:grid"
             >
               <CircleHelp className="size-5" strokeWidth={1.75} />
-            </button>
+            </a>
             <button
               type="button"
               className="hidden h-10 items-center gap-2 rounded-lg border border-line px-3 text-sm font-medium lg:flex"

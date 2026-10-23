@@ -13,10 +13,10 @@ import {
 import type { ElementType } from "react";
 
 const ITEMS: { icon: ElementType; label: string; href: string }[] = [
-  { icon: UserRound, label: "My Profile", href: "#" },
+  { icon: UserRound, label: "My Profile", href: "/profile" },
   { icon: Settings, label: "Account Settings", href: "/settings" },
-  { icon: Bell, label: "Notifications", href: "#" },
-  { icon: CircleHelp, label: "Help & Support", href: "#" },
+  { icon: Bell, label: "Notifications", href: "/notifications" },
+  { icon: CircleHelp, label: "Help & Support", href: "/help" },
 ];
 
 export default function UserMenu() {
