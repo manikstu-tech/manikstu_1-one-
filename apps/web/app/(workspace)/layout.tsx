@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { NavList } from "./nav-data";
 import MobileNav from "./MobileNav";
+import UserMenu from "./UserMenu";
 
 export default function WorkspaceLayout({
   children,
@@ -109,21 +110,7 @@ export default function WorkspaceLayout({
               English (EN)
               <ChevronDown className="size-4 text-muted" />
             </button>
-            <button
-              type="button"
-              className="flex items-center gap-2.5 rounded-lg py-1 pl-1 pr-2 hover:bg-brand-cream"
-            >
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand-green text-xs font-bold text-white">
-                AK
-              </span>
-              <span className="hidden text-left leading-tight md:block">
-                <span className="block text-sm font-semibold">Aftab Khan</span>
-                <span className="block text-[11px] text-muted">
-                  Operations Manager
-                </span>
-              </span>
-              <ChevronDown className="hidden size-4 text-muted md:block" />
-            </button>
+            <UserMenu />
           </div>
         </header>
 
