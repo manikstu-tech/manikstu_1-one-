@@ -7,6 +7,7 @@ import {
   MoreVertical,
   Plus,
 } from "lucide-react";
+import Link from "next/link";
 import {
   Avatar,
   Breadcrumb,
@@ -18,7 +19,6 @@ import {
   Kpi,
   PageHeader,
   PaginationNote,
-  PrimaryButton,
   Progress,
   SearchInput,
   TableWrap,
@@ -64,9 +64,12 @@ export default function ProjectsPage() {
         subtitle="Manage and track all projects across Manikstu Agro"
         actions={
           <>
-            <PrimaryButton>
+            <Link
+              href="/projects/new"
+              className="flex h-10 items-center gap-2 rounded-lg bg-brand-green px-4 text-sm font-semibold text-white transition hover:bg-brand-leaf"
+            >
               <Plus className="size-4" /> New Project
-            </PrimaryButton>
+            </Link>
             <GhostButton>
               <MoreVertical className="size-4" />
             </GhostButton>
