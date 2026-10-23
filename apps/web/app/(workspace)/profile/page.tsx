@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BadgeCheck,
   CalendarDays,
@@ -9,25 +11,62 @@ import {
   Package,
   Pencil,
   Phone,
+  Save,
   ShieldCheck,
+  X,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { ElementType } from "react";
 import {
   Breadcrumb,
   Card,
   Chip,
-  GhostButton,
   PageHeader,
-  PrimaryButton,
   Progress,
 } from "../_components";
 
-const CONTACT: { icon: ElementType; label: string; value: string }[] = [
-  { icon: Mail, label: "Email", value: "aftab.khan@manikstu.com" },
-  { icon: Phone, label: "Phone", value: "+91 98765 43210" },
-  { icon: MapPin, label: "Location", value: "Raipur, Chhattisgarh" },
-  { icon: CalendarDays, label: "Member since", value: "05 Jan 2025" },
+type Profile = {
+  name: string;
+  role: string;
+  email: string;
+  phone: string;
+  location: string;
+  since: string;
+  color: string;
+};
+
+const DEFAULT: Profile = {
+  name: "Aftab Khan",
+  role: "Operations Manager",
+  email: "aftab.khan@manikstu.com",
+  phone: "+91 98765 43210",
+  location: "Raipur, Chhattisgarh",
+  since: "05 Jan 2025",
+  color: "bg-brand-green",
+};
+
+const COLORS = [
+  "bg-brand-green",
+  "bg-brand-leaf",
+  "bg-brand-gold",
+  "bg-blue-500",
+  "bg-rose-500",
+  "bg-teal-600",
 ];
+
+const STORAGE_KEY = "manikstu_profile";
+
+function initials(name: string) {
+  return (
+    name
+      .trim()
+      .split(/\s+/)
+      .map((w) => w[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "?"
+  );
+}
 
 const PROJECTS = [
   { name: "AJAH", role: "Operations Manager", sheds: 142, pct: 24 },
@@ -49,7 +88,111 @@ const STATS = [
   { label: "Open Items", value: "12" },
 ];
 
+function Field({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: ElementType;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-brand-cream text-muted">
+        <Icon className="size-[18px]" strokeWidth={1.75} />
+      </span>
+      <div className="min-w-0">
+        <p className="text-xs text-muted">{label}</p>
+        <p className="truncate text-sm font-medium">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function EditField({
+  label,
+  value,
+  onChange,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+}) {
+  return (
+    <label className="block">
+      <span className="text-[13px] font-medium">{label}</span>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-1.5 h-10 w-full rounded-lg border border-line bg-white px-3 text-sm outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+      />
+    </label>
+  );
+}
+
 export default function ProfilePage() {
+  const [profile, setProfile] = useState<Profile>(DEFAULT);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Profile>(DEFAULT);
+  const [saved, setSaved] = useState(false);
+
+  // Load any saved profile for this viewer.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = { ...DEFAULT, ...JSON.parse(raw) } as Profile;
+        setProfile(parsed);
+        setDraft(parsed);
+      }
+    } catch {
+      /* ignore unavailable storage */
+    }
+  }, []);
+
+  function startEdit() {
+    setDraft(profile);
+    setEditing(true);
+    setSaved(false);
+  }
+
+  function cancel() {
+    setDraft(profile);
+    setEditing(false);
+  }
+
+  function save() {
+    setProfile(draft);
+    setEditing(false);
+    setSaved(true);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    } catch {
+      /* ignore unavailable storage */
+    }
+  }
+
+  function cyclePhoto() {
+    const base = editing ? draft : profile;
+    const next = COLORS[(COLORS.indexOf(base.color) + 1) % COLORS.length];
+    if (editing) setDraft({ ...draft, color: next });
+    else {
+      const updated = { ...profile, color: next };
+      setProfile(updated);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  const shown = editing ? draft : profile;
+
   return (
     <div className="space-y-5">
       <Breadcrumb items={["My Profile"]} />
@@ -57,49 +200,106 @@ export default function ProfilePage() {
         title="My Profile"
         subtitle="Your account details, assigned projects and recent activity"
         actions={
-          <>
-            <GhostButton>
-              <Camera className="size-4" /> Change Photo
-            </GhostButton>
-            <PrimaryButton>
-              <Pencil className="size-4" /> Edit Profile
-            </PrimaryButton>
-          </>
+          editing ? (
+            <>
+              <button
+                type="button"
+                onClick={cancel}
+                className="flex h-10 items-center gap-2 rounded-lg border border-line bg-white px-3.5 text-sm font-medium text-brand-charcoal/80 transition hover:bg-brand-cream"
+              >
+                <X className="size-4" /> Cancel
+              </button>
+              <button
+                type="button"
+                onClick={save}
+                className="flex h-10 items-center gap-2 rounded-lg bg-brand-green px-4 text-sm font-semibold text-white transition hover:bg-brand-leaf"
+              >
+                <Save className="size-4" /> Save Changes
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={cyclePhoto}
+                className="flex h-10 items-center gap-2 rounded-lg border border-line bg-white px-3.5 text-sm font-medium text-brand-charcoal/80 transition hover:bg-brand-cream"
+              >
+                <Camera className="size-4" /> Change Photo
+              </button>
+              <button
+                type="button"
+                onClick={startEdit}
+                className="flex h-10 items-center gap-2 rounded-lg bg-brand-green px-4 text-sm font-semibold text-white transition hover:bg-brand-leaf"
+              >
+                <Pencil className="size-4" /> Edit Profile
+              </button>
+            </>
+          )
         }
       />
+
+      {saved && !editing && (
+        <div className="flex items-center gap-2 rounded-lg bg-success-bg px-4 py-2.5 text-sm font-medium text-brand-leaf">
+          <CircleCheck className="size-4" /> Profile updated successfully.
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[38fr_62fr]">
         {/* Identity card */}
         <Card>
           <div className="flex flex-col items-center text-center">
-            <span className="grid size-24 place-items-center rounded-full bg-brand-green text-3xl font-bold text-white">
-              AK
-            </span>
-            <h2 className="mt-4 text-xl font-bold">Aftab Khan</h2>
-            <p className="text-sm text-muted">Operations Manager</p>
-            <div className="mt-2 flex items-center gap-2">
-              <Chip tone="green" icon={ShieldCheck}>Verified</Chip>
-              <Chip tone="blue">Admin Access</Chip>
+            <div className="relative">
+              <span
+                className={`grid size-24 place-items-center rounded-full text-3xl font-bold text-white ${shown.color}`}
+              >
+                {initials(shown.name)}
+              </span>
+              <button
+                type="button"
+                onClick={cyclePhoto}
+                aria-label="Change photo"
+                className="absolute bottom-0 right-0 grid size-8 place-items-center rounded-full border-2 border-white bg-brand-green text-white shadow hover:bg-brand-leaf"
+              >
+                <Camera className="size-4" />
+              </button>
             </div>
+
+            {editing ? (
+              <div className="mt-4 w-full space-y-3 text-left">
+                <EditField label="Full Name" value={draft.name} onChange={(v) => setDraft({ ...draft, name: v })} />
+                <EditField label="Role / Designation" value={draft.role} onChange={(v) => setDraft({ ...draft, role: v })} />
+              </div>
+            ) : (
+              <>
+                <h2 className="mt-4 text-xl font-bold">{shown.name}</h2>
+                <p className="text-sm text-muted">{shown.role}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <Chip tone="green" icon={ShieldCheck}>Verified</Chip>
+                  <Chip tone="blue">Admin Access</Chip>
+                </div>
+              </>
+            )}
           </div>
 
-          <dl className="mt-6 space-y-3 border-t border-line pt-5">
-            {CONTACT.map((c) => (
-              <div key={c.label} className="flex items-center gap-3">
-                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-brand-cream text-muted">
-                  <c.icon className="size-[18px]" strokeWidth={1.75} />
-                </span>
-                <div className="min-w-0">
-                  <dt className="text-xs text-muted">{c.label}</dt>
-                  <dd className="truncate text-sm font-medium">{c.value}</dd>
-                </div>
+          <div className="mt-6 border-t border-line pt-5">
+            {editing ? (
+              <div className="space-y-3">
+                <EditField label="Email" type="email" value={draft.email} onChange={(v) => setDraft({ ...draft, email: v })} />
+                <EditField label="Phone" value={draft.phone} onChange={(v) => setDraft({ ...draft, phone: v })} />
+                <EditField label="Location" value={draft.location} onChange={(v) => setDraft({ ...draft, location: v })} />
               </div>
-            ))}
-          </dl>
+            ) : (
+              <dl className="space-y-3">
+                <Field icon={Mail} label="Email" value={shown.email} />
+                <Field icon={Phone} label="Phone" value={shown.phone} />
+                <Field icon={MapPin} label="Location" value={shown.location} />
+                <Field icon={CalendarDays} label="Member since" value={shown.since} />
+              </dl>
+            )}
+          </div>
         </Card>
 
         <div className="space-y-5">
-          {/* Stats */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {STATS.map((s) => (
               <div key={s.label} className="rounded-xl border border-line bg-white p-5 text-center shadow-sm">
@@ -109,7 +309,6 @@ export default function ProfilePage() {
             ))}
           </div>
 
-          {/* Assigned projects */}
           <Card title="Assigned Projects">
             <ul className="space-y-3">
               {PROJECTS.map((p) => (
@@ -124,7 +323,6 @@ export default function ProfilePage() {
             </ul>
           </Card>
 
-          {/* Recent activity */}
           <Card title="Recent Activity">
             <ul className="space-y-4">
               {ACTIVITY.map((a, i) => (
