@@ -3,5 +3,6 @@
 This package records the six confirmed design decisions and identifies unresolved policy choices.
 
 - `DECISION_UPDATE.md` — updated requirements, workflow, offline UX, WhatsApp, theme, localization, phases and open decisions.
+- `CONVENTIONS.md` — industry-friendly file, folder, naming, import, asset and test conventions.
 
 This is a draft specification, not an implemented app or editable Figma deliverable.

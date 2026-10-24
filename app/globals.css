@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #4a8c3f;
+  --color-brand-leaf: #3a7030;
+  --color-brand-deep: #0c3b20;
+  --color-brand-red: #d4342c;
+  --color-brand-cream: #fdf6ec;
+  --color-brand-charcoal: #1a1a1a;
+  --color-brand-gold: #c4952a;
+  --color-success-bg: #eaf3e6;
+  --color-line: #dde4da;
+  --color-muted: #667064;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-brand-cream);
+  color: var(--color-brand-charcoal);
+}
+
+/* Utilities to completely remove scrollbars while preserving scrollability */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox and modern Chromium */
+}
+
+/* Global subtle scrollbar styling to prevent OS default bright white scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}

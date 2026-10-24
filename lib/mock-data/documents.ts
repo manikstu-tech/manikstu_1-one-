@@ -1,0 +1,75 @@
+import type { DocumentRecord } from "@/types";
+
+export const DOCUMENT_CATEGORIES = [
+  "All Documents",
+  "KYC & Identity",
+  "Consent Form",
+  "Bank Deposit Slip",
+  "Site Inspection Photo",
+  "Work Order Copy",
+  "Handover Certificate",
+];
+
+export const INITIAL_DOCUMENTS: DocumentRecord[] = [
+  {
+    id: "DOC-0091",
+    name: "Aadhaar_SavitaBai_FrontBack.pdf",
+    category: "KYC & Identity",
+    shed: "SH-000123",
+    uploadedBy: "Ramesh Kumar",
+    date: "20-Mar-2026",
+    size: "1.4 MB",
+    status: "Approved",
+  },
+  {
+    id: "DOC-0087",
+    name: "Signed_Consent_Form_LaxmiSoni.pdf",
+    category: "Consent Form",
+    shed: "SH-000118",
+    uploadedBy: "Manoj Singh",
+    date: "19-Mar-2026",
+    size: "2.1 MB",
+    status: "Approved",
+  },
+  {
+    id: "DOC-0082",
+    name: "Bank_Challan_UTR_551928374.pdf",
+    category: "Bank Deposit Slip",
+    shed: "SH-000110",
+    uploadedBy: "Aftab Khan",
+    date: "17-Mar-2026",
+    size: "820 KB",
+    status: "Approved",
+  },
+  {
+    id: "DOC-0078",
+    name: "Foundation_Plinth_Inspection_Geotag.jpg",
+    category: "Site Inspection Photo",
+    shed: "SH-000123",
+    uploadedBy: "Ramesh Kumar",
+    date: "15-Mar-2026",
+    size: "3.6 MB",
+    status: "Approved",
+  },
+  {
+    id: "DOC-0071",
+    name: "WorkOrder_WO-2026-0147_Signed.pdf",
+    category: "Work Order Copy",
+    shed: "SH-000123",
+    uploadedBy: "Shri Ram (AVP)",
+    date: "14-Feb-2026",
+    size: "1.8 MB",
+    status: "Approved",
+  },
+  {
+    id: "DOC-0064",
+    name: "Site_Photo_Defect_MeshOverlap.jpg",
+    category: "Site Inspection Photo",
+    shed: "SH-000118",
+    uploadedBy: "Manoj Singh",
+    date: "12-Mar-2026",
+    size: "4.2 MB",
+    status: "Needs Correction",
+  },
+];
+

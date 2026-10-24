@@ -1,0 +1,73 @@
+import type { InspectionRecord } from "@/types";
+
+export const INSPECTION_CHECKLIST = [
+  "Foundation column dimensions and concrete grade compliance verified",
+  "GI welded wire mesh joint overlap (min 75mm) and binding secure",
+  "MS hollow pipe wall thickness (min 2.0mm) and primer coating checked",
+  "Roof slope angle and wind tie down anchors properly installed",
+  "Site drainage slope diverting rainwater away from structure base",
+];
+
+export const INITIAL_INSPECTIONS: InspectionRecord[] = [
+  {
+    id: "INS-2026-031",
+    shed: "SH-000123",
+    beneficiary: "Savita Bai Sahu",
+    stage: "Plinth & Framing",
+    inspector: "Ramesh Kumar (Supervisor)",
+    submitted: "Today, 10:30 AM",
+    status: "Pending Review",
+    tone: "amber",
+    defectsCount: 0,
+    photoCount: 3,
+  },
+  {
+    id: "INS-2026-028",
+    shed: "SH-000118",
+    beneficiary: "Laxmi Soni",
+    stage: "Roofing & Cladding",
+    inspector: "Manoj Singh (Supervisor)",
+    submitted: "Yesterday, 04:15 PM",
+    status: "In Correction",
+    tone: "red",
+    defectsCount: 2,
+    photoCount: 4,
+  },
+  {
+    id: "INS-2026-024",
+    shed: "SH-000110",
+    beneficiary: "Mangal Ram",
+    stage: "Site Preparation",
+    inspector: "Kunti Devi (Field Coord)",
+    submitted: "22-Mar-2026",
+    status: "Approved",
+    tone: "green",
+    defectsCount: 0,
+    photoCount: 3,
+  },
+  {
+    id: "INS-2026-019",
+    shed: "SH-000092",
+    beneficiary: "Rekha Patel",
+    stage: "Final Handover Audit",
+    inspector: "Shri Ram (AVP Infra)",
+    submitted: "19-Mar-2026",
+    status: "Approved",
+    tone: "green",
+    defectsCount: 0,
+    photoCount: 5,
+  },
+  {
+    id: "INS-2026-015",
+    shed: "SH-000076",
+    beneficiary: "Suresh Verma",
+    stage: "Internal Fitout",
+    inspector: "Aftab Khan (Ops Mgr)",
+    submitted: "17-Mar-2026",
+    status: "In Correction",
+    tone: "red",
+    defectsCount: 1,
+    photoCount: 2,
+  },
+];
+

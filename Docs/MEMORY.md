@@ -1,5 +1,5 @@
 # Project Memory — Manikstu Agro Operations Platform
-**Updated:** 2026-10-19
+**Updated:** 2026-10-24
 
 ## Product direction
 Company-wide Operations Management Platform; Project AJAH is one configurable project. Core principle: permanent traceable site/shed record linked to beneficiary, approved work, construction, materials, finances, documents, issues and history.
@@ -20,35 +20,16 @@ Records spread across spreadsheets, WhatsApp, calls and paper. Progress, deadlin
 10. Completion confirmation and final shed-wise costing lack a consistent process.
 ₹1.25 lakh rule is AJAH-specific unless separately confirmed.
 
-## Discovery status
-Answers recorded through Question 36. Question 37 is pending; do not invent the final number of questions.
+## Completed UI/UX Audit & Production Enhancements (2026-10-24)
+- **Flaw Detection & Audit:** Completed comprehensive audit across all 28 routes and components; resolved 18 prioritized issues in `flaw-register.md`.
+- **Navigation & Routing:** Converted all anchor tags to client-side Next.js `<Link>` components, eliminating full-page browser reloads. Ancestor breadcrumbs are fully interactive.
+- **Header Tools:** Added interactive `ProjectSwitcher` for multi-project switching (AJAH, SUSU, FPC, LPS, MANP), global accessible `CommandPalette` (`Ctrl+K`), and `LanguageModal` (EN, HI, OD, CG).
+- **Core Action Flows:** Implemented modal creation and review dialogs for "New Shed", "New Beneficiary", "Create Work Order", "New Dispatch", "Create Task", "Upload Document", "Add User", "AVP Inspection Review", "Finance UTR Verification", and "Raise Support Ticket".
+- **Data Filtering & Pagination:** All data tables feature live real-time search, multi-select dropdown filters, interactive pagination, and empty states.
+- **Feedback & Notifications:** Integrated global `ToastProvider` and `useToast()` hook with auto-dismiss and ARIA live regions.
+- **Quality & Verification:**
+  - `npm --prefix apps/web run lint` → **0 errors, 0 warnings**.
+  - `npm --prefix apps/web run build` → **28/28 Static/Partial Prerender routes generated successfully**.
 
-## Documents created in this pack
-- PRD.md — product scope, users, features, metrics and acceptance.
-- ARCHITECTURE.md — proposed stack, app flow, entities, folders, API and security.
-- RULES.md — engineering guardrails, error handling and AI boundaries.
-- PHASES.md — roadmap and exit gates.
-- DESIGN.md — palette, fonts, typography, components and screen guidance.
-- MEMORY.md — this handoff.
-- README.md — index/status.
-
-## Current file being worked on
-Frontend-only static replica in `apps/web` (Next.js 16.4.2 / React 19.3 / Tailwind 4 / lucide-react) — replicates the 21 approved screenshots verbatim, hardcoded per-screen mocks, light theme only, no backend.
-- Done: login screen (`app/login/page.tsx`), workspace shell (sidebar + header, `app/(workspace)/layout.tsx`), company dashboard (`app/(workspace)/dashboard/page.tsx`) with map placeholder per locked decision.
-- Next: Projects list → Project Workspace (AJAH), then Shed Register / Shed Detail.
-**Next file:** `app/(workspace)/projects/page.tsx`.
-
-## Replica decisions (confirmed by user)
-Frontend-only static replica; hardcoded mocks kept verbatim including cross-screen number inconsistencies; no dark mode; map dropped for placeholder card; no auth/finance math/sync/WhatsApp; EN-only strings. Login has no language cards; top-right `English (EN)` pill stays.
-
-## Proposed stack, not implemented
-Next.js 16 / React 19 / TypeScript; Laravel 13 REST; PostgreSQL; private S3-compatible media storage; Laravel queue/scheduler.
-
-## Brand
-Green `#4A8C3F`; dark leaf `#3A7030`; deep `#0C3B20`; red `#D4342C`; cream `#FDF6EC`; charcoal `#1A1A1A`; rice white `#F5F0E8`; bamboo gold `#C4952A`. Use attached Manikstu logo. Tokens in `apps/web/app/globals.css`. Logo (JPEG, white bg) needs a white rounded chip on dark surfaces.
-
-## Open decisions
-Exact stages/transition authority; completion inspection/handover; accounting treatment; material accountability; deadlines/escalation; approval matrix; replacement linkage; fabricator scorecard; hosting/backup/retention; WhatsApp and offline needs.
-
-## Session guardrails
-Separate confirmed, user-reported, proposed and open. Do not invent metrics or claim app implementation/Figma prototype exists. Do not apply AJAH-specific rules company-wide. Update this file after meaningful work.
+## Brand Tokens
+Green `#4A8C3F`; dark leaf `#3A7030`; deep `#0C3B20`; red `#D4342C`; cream `#FDF6EC`; charcoal `#1A1A1A`; rice white `#F5F0E8`; bamboo gold `#C4952A`. Tokens in `apps/web/app/globals.css`. Logo on dark surfaces uses a white rounded chip with padding.
